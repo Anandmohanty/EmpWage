@@ -2,50 +2,100 @@
 {
     internal class Program
     {
-        public const int IS_PART_TIME = 1;
-        public const int IS_FULL_TIME = 2;
-        public const int EMP_RATE_PER_HOUR = 20;
-        public const int NUM_OF_WORKING_DAYS = 20;
-        public const int MAX_HRS_IN_MONTH = 100;
-
-        public static int computeEmpwage()
+        public const int fullTimePresent = 1;
+        public const int partTimePresent = 2;
+        public const int empRatePerHr = 20;
+        public const int maxWorkingDays = 20;
+        public const int maxWorkingHrs = 100;
+        //Refactor the Code to write a Class Method to Compute Employee Wage
+        public static int classMethodToComputeEmpWage()
         {
-            int empHrs = 0, totalEmpHrs = 0, totalWorkingDays = 0;
-
-            while (totalEmpHrs < MAX_HRS_IN_MONTH && totalWorkingDays < MAX_HRS_IN_MONTH)
+            //declare variable
+            int empHr;
+            int day = 1;
+            int totalWorkHr = 0;
+            //compute emp wage
+            while (day <= maxWorkingDays && totalWorkHr <= maxWorkingHrs)
             {
-                totalWorkingDays++;
-                Random randon = new Random();
-                int empCheck = randon.Next(0, 3);
-
-                switch (empCheck)
+                Random random = new Random();
+                int EmpCheck = random.Next(0, 3);
+                switch (EmpCheck)
                 {
-
-                    case IS_PART_TIME: empHrs = 4; break;
-
-                    case IS_FULL_TIME: empHrs = 8; break;
-
+                    case fullTimePresent:
+                        empHr = 8;
+                        break;
+                    case partTimePresent:
+                        empHr = 4;
+                        break;
                     default:
-                        empHrs = 0;
+                        empHr = 0;
                         break;
                 }
-                totalEmpHrs = totalEmpHrs + empHrs;
-                Console.WriteLine("Day#:" + totalWorkingDays + "Emp Hrs : " + empHrs);
-
-
-
+                day++;
+                //calculate daily wage
+                int dailyWage = empRatePerHr * empHr;
+                Console.WriteLine("Daily wage is " + dailyWage);
+                //calculate total work hour
+                totalWorkHr += empHr;
             }
-            int totalEmpWage = totalEmpHrs + EMP_RATE_PER_HOUR;
-            Console.WriteLine("Total Emp Wage : " + totalEmpWage);
-            return totalEmpWage;
+            //retuen total work hour
+            return totalWorkHr;
         }
-        static void main(string[] args)
+        //compute Employee Wage for multiple companies using class method
+        public static void classMethodToComputeCompanyEmpWage(string CompanyName, int empRatePerHr, int maxWorkingDays, int maxWorkingHrs)
         {
-            computeEmpwage();
-
-
-
-
+            //declare variable
+            int empHr;
+            int day = 1;
+            int totalWorkHr = 0;
+            //compute emp wage
+            while (day <= maxWorkingDays && totalWorkHr <= maxWorkingHrs)
+            {
+                Random random = new Random();
+                int EmpCheck = random.Next(0, 3);
+                switch (EmpCheck)
+                {
+                    case fullTimePresent:
+                        empHr = 8;
+                        break;
+                    case partTimePresent:
+                        empHr = 4;
+                        break;
+                    default:
+                        empHr = 0;
+                        break;
+                }
+                day++;
+                //calculate total work hour
+                totalWorkHr += empHr;
+            }
+            int totalWage = empRatePerHr * totalWorkHr;
+            Console.WriteLine("Total emp wage of " + CompanyName + " company is " + totalWage + " using class method");
+        }
+        static void Main(string[] args)
+        {
+            //Refactor the Code to write a Class Method to Compute Employee Wage
+            int totalWorkHr = classMethodToComputeEmpWage();
+            int totalWage = empRatePerHr * totalWorkHr;
+            Console.WriteLine("Computer Total emp wage using class method is " + totalWage);
+            //compute Employee Wage for multiple companies using class method
+            Console.WriteLine("Enter number of company is present");
+            int NumOfCompany = Convert.ToInt32(Console.ReadLine());
+            //enters the companies detail
+            while (NumOfCompany > 0)
+            {
+                Console.WriteLine("Enter company Name");
+                string CompanyName = Console.ReadLine();
+                Console.WriteLine("Enter emp rate per hour of company");
+                int empRatePerHr = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine("Enter max working days of company");
+                int maxWorkingDays = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine("Enter max working hour of company");
+                int maxWorkingHrs = Convert.ToInt32(Console.ReadLine());
+                //calling each company to compute seperate total wage
+                classMethodToComputeCompanyEmpWage(CompanyName, empRatePerHr, maxWorkingDays, maxWorkingHrs);
+                NumOfCompany--;
+            }
         }
     }
 }
